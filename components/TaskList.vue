@@ -13,7 +13,7 @@
 
       <transition-group  name="list">
         <template v-for="(task, taskIndex) in tasks">
-          <div  :key="task.id" 
+          <div  :key="task._id" 
               class="m-1 taskWrapper" 
               draggable 
               @dragstart="drag($event, taskIndex)"
@@ -109,7 +109,7 @@ export default {
 
     drop(ev, dropIndex){
        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-       this.$store.commit('MOVE_TASK', { 
+       this.$store.dispatch('moveTask', { 
          listtypeFrom: dropData.listtype, 
          indexFrom: dropData.index,
          listtypeTo: this.listtype, 
@@ -119,7 +119,7 @@ export default {
 
     dropOnList(ev){
        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-       this.$store.commit('MOVE_TASK', { 
+       this.$store.dispatch('moveTask', { 
          listtypeFrom: dropData.listtype, 
          indexFrom: dropData.index,
          listtypeTo: this.listtype, 
@@ -132,11 +132,12 @@ export default {
     },
 
     addtask() {
-      this.$store.commit('ADD_TASK', { listtype: this.listtype, name: this.newTaskName} );
+      this.$store.dispatch('addTask', { listtype: this.listtype, name: this.newTaskName, done:0 } );
       this.newTaskName = '';
     },
+
     deltask(index) {
-      this.$store.commit('DEL_TASK', { listtype: this.listtype, index} );
+      this.$store.dispatch('delTask', { listtype: this.listtype, index} );
     },
 
     async clearAllConfifm(){ 
@@ -148,7 +149,7 @@ export default {
           hideHeaderClose: false,
         })          
         if (confirm)
-              this.$store.commit('CLEAR_ALL', this.listtype);
+              this.$store.dispatch('clearAll', this.listtype);
     },
 
     // clearall()  {
@@ -156,13 +157,13 @@ export default {
     //   this.$store.commit('CLEAR_ALL', this.listtype);
     // },
     addstd() {
-      this.$store.commit('ADD_STD', this.listtype);
+      this.$store.dispatch('addStdTask', this.listtype);
     },
     dotask(index)   {
-      this.$store.commit('DO_TASK', { listtype: this.listtype, index, progress: 0.5} );
+      this.$store.dispatch('doTask', { listtype: this.listtype, index, progress: 0.5} );
     },
     sort()   {
-      this.$store.commit('SORT', this.listtype);
+      this.$store.dispatch('sort', this.listtype);
     },
     taskClass(done){
       return {

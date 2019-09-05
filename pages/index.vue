@@ -30,12 +30,17 @@ export default {
   methods:{
     drop(ev, dropIndex){
        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-        this.$store.commit('DEL_TASK', { 
+        this.$store.dispatch('delTask', { 
           listtype: dropData.listtype, 
           index: dropData.index,
         });
 
     },
+
+  },
+  async fetch({ store, params }){
+    await store.dispatch("LoadAll", "today");
+    await store.dispatch("LoadAll", "global");
 
   }
 
