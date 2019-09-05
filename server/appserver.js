@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 
 
-mongoose.connect(  )
+mongoose.connect( "mongodb://localhost:27017/local" )
 .then(()=>{
   console.log("MongoDB connected");
 })
