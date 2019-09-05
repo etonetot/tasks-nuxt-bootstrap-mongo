@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 
 
-mongoose.connect( "mongodb+srv://taskeditor:Ldw0OcOMfnhARdhh@cluster0-oe6vl.mongodb.net/test?retryWrites=true&w=majority" )
+mongoose.connect(  )
 .then(()=>{
   console.log("MongoDB connected");
 })
