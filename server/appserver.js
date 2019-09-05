@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 
 
-mongoose.connect( "mongodb+srv://taskeditor:Ldw0OcOMfnhARdhh@cluster0-oe6vl.mongodb.net/test?retryWrites=true&w=majority" )
+mongoose.connect( "mongodb://localhost:27017/local" )
 .then(()=>{
   console.log("MongoDB connected");
 })
@@ -27,10 +27,17 @@ mongoose.connect( "mongodb+srv://taskeditor:Ldw0OcOMfnhARdhh@cluster0-oe6vl.mong
 
   
 
-router.get('/create/today', controller.createToday)
-router.get('/create/global', controller.createGlobal)
-router.get('/get/today', controller.getToday)
-router.get('/get/global', controller.getGlobal)
+router.post('/today/create', controller.createToday)
+router.post('/global/create', controller.createGlobal)
+
+router.put('/today/', controller.setToday)
+router.put('/global/', controller.setGlobal)
+
+router.delete('/today/:id', controller.deleteToday)
+router.delete('/global/:id', controller.deleteGlobal)
+
+router.get('/today/get', controller.getToday)
+router.get('/global/get', controller.getGlobal)
 
 
 app.use('/api/', router)
